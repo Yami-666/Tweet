@@ -1,9 +1,6 @@
 package com.yami.Tweet.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Message {
@@ -12,23 +9,27 @@ public class Message {
     private Integer id;
 
     private String text;
-    private String author;
+    private String hashTag;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user.id")
+    private User author;
+
+
 
     public Message() {
     }
 
-    public Message(String text, String tag) {
+    public Message(String text, String hashTag, User user) {
         this.text = text;
-        this.author = tag;
+        this.hashTag = hashTag;
+        this.author = user;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "<anon>";
     }
 
-    public String getText() {
-        return text;
-    }
 
     public Integer getId() {
         return id;
@@ -38,12 +39,27 @@ public class Message {
         this.id = id;
     }
 
-    public String getTag() {
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getHashTag() {
+        return hashTag;
+    }
+
+    public void setHashTag(String hashTag) {
+        this.hashTag = hashTag;
+    }
+
+    public User getAuthor() {
         return author;
     }
 
-    public void setTag(String tag) {
-        this.author = tag;
+    public void setAuthor(User author) {
+        this.author = author;
     }
-
 }

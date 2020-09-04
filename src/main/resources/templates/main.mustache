@@ -11,7 +11,7 @@
     <div>
         <form method="post">
             <input type="text" name="text" placeholder="Введите сообщение" />
-            <input type="text" name="author" placeholder="Автор">
+            <input type="text" name="hashTag" placeholder="Хеш-тег">
             <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
             <button type="submit">Добавить</button>
         </form>
@@ -26,7 +26,8 @@
         <div>
             <b>{{id}}</b>
             <span>{{text}}</span>
-            <i>{{tag}}</i>
+            <i>{{hashTag}}</i>
+            <strong>{{authorName}}</strong>
         </div>
     {{/messages}}
 </body>

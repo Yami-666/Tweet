@@ -1,7 +1,9 @@
 package com.yami.Tweet.controller;
 
 import com.yami.Tweet.domain.Message;
+import com.yami.Tweet.domain.User;
 import com.yami.Tweet.repos.MessageRepo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,8 +33,12 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String text, @RequestParam String author, Map<String, Object> model) {
-        Message message = new Message(text, author);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String hashTag, Map<String, Object> model
+    ) {
+        Message message = new Message(text, hashTag, user);
 
         messageRepo.save(message);
 
@@ -47,7 +53,7 @@ public class MainController {
         Iterable<Message> messages;
 
         if (filter != null && !filter.isEmpty()) {
-            messages = messageRepo.findByAuthor(filter);
+            messages = messageRepo.findByHashTag(filter);
         } else {
             messages = messageRepo.findAll();
         }
