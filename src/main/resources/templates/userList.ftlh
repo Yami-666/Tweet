@@ -22,5 +22,4 @@ List of users:
     </#list>
     </tbody>
 </table>
-<a href="/main">Back to main menu</a>
 </@c.page>
